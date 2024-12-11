@@ -1,0 +1,9 @@
+<div class="d-flex flex-wrap gap-5">
+    @for (product of products; track $index) {
+        <card-product 
+            [ID]="product.ID"
+            [name]="product.name"
+            [detail]="product.detail"
+        />
+    }
+</div>
