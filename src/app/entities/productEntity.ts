@@ -14,6 +14,7 @@ export class productEntity extends baseEntity{
     public updatedOn: Date | null;
     public deletedOn: Date | null;
     public createdByUserId: number;
+    
 
     constructor(
         ID: number,

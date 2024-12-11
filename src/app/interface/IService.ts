@@ -1,10 +1,10 @@
-import { ApiService } from "../services/ApiService";
+import { Observable } from "rxjs";
 
-export interface IService<T> {
+export interface IService<model, saveModel, entity> {
     // Methods
-    getAll(): T[];
-    get(ID: number): T;
-    add(entity: T): void;
-    update(entity: T): void;
-    delete(ID: number) : void;
+    getAll(): model[];
+    get(ID: number): entity;
+    add(entity: saveModel): Observable<any>;
+    update(entity: saveModel): Observable<any>;
+    delete(ID: number) : Observable<any>;
 }

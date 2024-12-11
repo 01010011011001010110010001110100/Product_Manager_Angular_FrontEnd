@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { IService } from '../../interface/IService';
-import { productEntity } from '../../models/productEntity';
-import { productService } from '../../services/productService';
+import { productEntity } from '../../entities/productEntity';
 import { CardProductComponent } from '../../components/card-product/card-product.component';
+import { productService } from '../../services/productService';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { productModel } from '../../DTOS/models/product/productModel';
 
 @Component({
   selector: 'list-products',
@@ -13,118 +14,11 @@ import { CardProductComponent } from '../../components/card-product/card-product
   styleUrl: './list-products.component.css'
 })
 export class ListProductsComponent {
-   private service: IService<productEntity>;
-   public products: productEntity[];
 
-   constructor() {
+   public products: productModel[];
 
-    // Create Servies
-    this.service = inject(productService);
-
-    // Fill datas
-    this.products = [
-      new productEntity(
-        1, 
-        'Nombre del Producto', 
-        'Detalle del Producto', 
-        1, 
-        2, 
-        100.0, 
-        50.0, 
-        150.0, 
-        120.0, 
-        true, 
-        false, 
-        new Date(), 
-        new Date(), 
-        null, 
-        101
-      ),
-      new productEntity(
-        1, 
-        'Nombre del Producto', 
-        'Detalle del Producto', 
-        1, 
-        2, 
-        100.0, 
-        50.0, 
-        150.0, 
-        120.0, 
-        true, 
-        false, 
-        new Date(), 
-        new Date(), 
-        null, 
-        101
-      ),
-      new productEntity(
-        1, 
-        'Nombre del Producto', 
-        'Detalle del Producto', 
-        1, 
-        2, 
-        100.0, 
-        50.0, 
-        150.0, 
-        120.0, 
-        true, 
-        false, 
-        new Date(), 
-        new Date(), 
-        null, 
-        101
-      ),
-      new productEntity(
-        1, 
-        'Nombre del Producto', 
-        'Detalle del Producto', 
-        1, 
-        2, 
-        100.0, 
-        50.0, 
-        150.0, 
-        120.0, 
-        true, 
-        false, 
-        new Date(), 
-        new Date(), 
-        null, 
-        101
-      ),
-      new productEntity(
-        1, 
-        'Nombre del Producto', 
-        'Detalle del Producto', 
-        1, 
-        2, 
-        100.0, 
-        50.0, 
-        150.0, 
-        120.0, 
-        true, 
-        false, 
-        new Date(), 
-        new Date(), 
-        null, 
-        101
-      ),
-      new productEntity(
-        1, 
-        'Nombre del Producto', 
-        'Detalle del Producto', 
-        1, 
-        2, 
-        100.0, 
-        50.0, 
-        150.0, 
-        120.0, 
-        true, 
-        false, 
-        new Date(), 
-        new Date(), 
-        null, 
-        101
-      )
-    ];
+   constructor(public service: productService) {
+    this.products = service.getAll();
    }
+   
 }
