@@ -1,10 +1,15 @@
+import { inject } from "@angular/core";
 import { IService } from "../interface/IService";
 import { productEntity } from "../models/productEntity";
 import { ApiService } from "./ApiService";
 
 export class productService implements IService<productEntity>{
 
-    constructor(private apiService: ApiService) {}
+    private apiService: ApiService;
+
+    constructor() {
+        this.apiService = inject(ApiService);
+    }
 
     getAll(): productEntity[] {
         throw new Error("Method not implemented.");

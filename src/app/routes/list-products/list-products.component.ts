@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IService } from '../../interface/IService';
 import { productEntity } from '../../models/productEntity';
 import { productService } from '../../services/productService';
 import { CardProductComponent } from '../../components/card-product/card-product.component';
 
 @Component({
-  selector: 'app-list-products',
+  selector: 'list-products',
   imports: [
     CardProductComponent
   ],
@@ -19,7 +19,7 @@ export class ListProductsComponent {
    constructor() {
 
     // Create Servies
-    this.service = new productService();
+    this.service = inject(productService);
 
     // Fill datas
     this.products = [
@@ -126,8 +126,5 @@ export class ListProductsComponent {
         101
       )
     ];
-
-    
-    
    }
 }
