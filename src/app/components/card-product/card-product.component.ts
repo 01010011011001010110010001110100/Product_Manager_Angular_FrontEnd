@@ -1,18 +1,21 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'card-product',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './card-product.component.html',
   styleUrl: './card-product.component.css'
 })
 export class CardProductComponent {
-  @Input() ID: number;
+  @Input() documentId: string;
   @Input() name: string;
   @Input() detail: string;
 
   constructor() {
-    this.ID = 0;
+    this.documentId = '';
     this.name = '';
     this.detail = '';
   }

@@ -1,4 +1,4 @@
-export class createProductRequest {
+export class editProductRequest {
     public name: string;
     public detail: string;
     public typeCurrencyID: string;
@@ -9,7 +9,7 @@ export class createProductRequest {
     public advancePrice: number;
     public isActive: boolean;
     public isDeleted: boolean;
-    public createdOn: string;
+    public updateOn: string;
     
 
     constructor(
@@ -21,6 +21,7 @@ export class createProductRequest {
         instalationCost: number,
         regularPrice: number,
         advancePrice: number,
+        isActive: boolean
       ) {
         this.name = name;
         this.detail = detail;
@@ -30,8 +31,8 @@ export class createProductRequest {
         this.instalationCost = instalationCost;
         this.regularPrice = regularPrice;
         this.advancePrice = advancePrice;
-        this.isActive = true;
+        this.isActive =  isActive;
         this.isDeleted = false;
-        this.createdOn = new Date().toISOString();
+        this.updateOn = new Date().toISOString();
     }
 }

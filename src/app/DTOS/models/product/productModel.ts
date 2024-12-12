@@ -1,14 +1,14 @@
 export class productModel {
-    public ID: number;
+    public documentId: string;
     public name: string;
     public detail: string;
 
     constructor(
-        ID: number,
+        documentId: string,
         name: string,
         detail: string
     ) {
-        this.ID = ID;
+        this.documentId = documentId;
         this.name = name;
         this.detail = detail;
     }

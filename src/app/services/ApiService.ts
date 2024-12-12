@@ -23,14 +23,14 @@ export class ApiService {
         );
     }
 
-    public updateData(endpoint: string, body: any): Observable<any> {
-        return this.http.put(`${this.baseUrl}/${endpoint}`, body).pipe(
+    public updateData(endpoint: string, body: any, documentId: string): Observable<any> {
+        return this.http.put(`${this.baseUrl}/${endpoint}/${documentId}`, body).pipe(
         catchError(this.handleError)
         );
     }
 
-    public deleteData(endpoint: string): Observable<any> {
-        return this.http.delete(`${this.baseUrl}/${endpoint}`).pipe(
+    public deleteData(endpoint: string, documentId: string): Observable<any> {
+        return this.http.delete(`${this.baseUrl}/${endpoint}/${documentId}`).pipe(
         catchError(this.handleError)
         );
     }

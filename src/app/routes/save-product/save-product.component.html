@@ -1,9 +1,19 @@
 <div class="row">
     <h1 class="ol-7 offset-3 mb-5">
-      Create Product
+      @if (editMode){
+        Editing Product
+      }
+      @else{
+        Create Product
+      }
     </h1>
     <div class="col-7 offset-3 border-secondary">
         <form>
+          
+            <button type="submit" class="btn btn-outline-danger float-end mb-5" (click)="delete();">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+
 
             <div class="form-row mb-3">
               <div class="form-group">
@@ -22,9 +32,9 @@
             <div class="form-row mb-3">
               <div class="input-group">
                 <select class="custom-select" id="typeCurrencyId" [(ngModel)]="model.typeCurrencyId" name="typeCurrencyId">
-                  <option selected value="0">Choose...</option>
+                  <option [value]="'0'">Choose...</option>
                   @for (typeCurrency of model.listTypeCurrencies; track $index) {
-                    <option [value]="typeCurrency.ID">{{typeCurrency.ISO2}}</option>
+                    <option [value]="typeCurrency.documentId" [selected]="typeCurrency.documentId == model.typeCurrencyId">{{typeCurrency.ISO2}}</option>
                   }
                 </select>
                 <div class="input-group-append">
@@ -36,9 +46,9 @@
             <div class="form-row mb-3">
               <div class="input-group">
                 <select class="custom-select" id="typePaymentId" [(ngModel)]="model.typePaymentId" name="typePaymentId">
-                  <option selected value="0">Choose...</option>
+                  <option selected [value]="'0'">Choose...</option>
                   @for (typePayment of model.listTypePayments; track $index) {
-                    <option [value]="typePayment.ID">{{typePayment.name}}</option>
+                    <option [value]="typePayment.documentId" [selected]="typePayment.documentId == model.typePaymentId">{{typePayment.name}}</option>
                   }
                 </select>
                 <div class="input-group-append">
@@ -65,7 +75,7 @@
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">$ {{model.typeCurrencyId == 0 ?  '' : model.listTypeCurrencies[model.typeCurrencyId].ISO2}}</span>
+                  <span class="input-group-text">$ </span>
                 </div>
                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="instalationCost" [(ngModel)]="model.instalationCost" name="instalationCost">
               </div>
@@ -101,7 +111,21 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary float-end" (click)="create();">Create</button>
+            <div class="input-group mb-5">
+              <div class="form-row mb-3">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [checked]="model.isActive" [(ngModel)]="model.isActive" name="isActive">
+                  <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+                </div>
+              </div>
+            </div>
+          
+
+            @if (editMode) {
+              <button type="submit" class="btn btn-primary float-end" (click)="update();">Save</button>
+            } @else { 
+              <button type="submit" class="btn btn-primary float-end" (click)="create();">Create</button>
+            }
 
           </form>
     </div>

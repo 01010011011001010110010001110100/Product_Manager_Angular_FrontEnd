@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { productEntity } from '../../entities/productEntity';
 import { CardProductComponent } from '../../components/card-product/card-product.component';
 import { productService } from '../../services/productService';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { productModel } from '../../DTOS/models/product/productModel';
 
 @Component({
@@ -18,7 +16,13 @@ export class ListProductsComponent {
    public products: productModel[];
 
    constructor(public service: productService) {
-    this.products = service.getAll();
+    // Initialize variables
+    this.products = [];
+
+    // Fill with productz
+    service.getAll().subscribe((products) => {
+      this.products = products;
+    });
    }
    
 }

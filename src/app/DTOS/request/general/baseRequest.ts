@@ -1,9 +1,9 @@
 export class baseRequest {
-    public ID: number;
+    public documentId: string;
     public name: string;
 
-    constructor(ID: number, name: string) {
-        this.ID = ID;
+    constructor(documentId: string, name: string) {
+        this.documentId = documentId;
         this.name = name;
     }
 }

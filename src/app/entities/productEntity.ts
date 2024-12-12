@@ -2,8 +2,8 @@ import { baseEntity } from "./general/baseEntity";
 
 export class productEntity extends baseEntity{
     public detail: string;
-    public typeCurrencyId: number;
-    public typePaymentId: number;
+    public typeCurrencyId: string;
+    public typePaymentId: string;
     public implementationCost: number;
     public instalationCost: number;
     public regularPrice: number;
@@ -17,11 +17,11 @@ export class productEntity extends baseEntity{
     
 
     constructor(
-        ID: number,
+        documentId: string,
         name: string,
         detail: string,
-        typeCurrencyId: number,
-        typePaymentId: number,
+        typeCurrencyId: string,
+        typePaymentId: string,
         implementationCost: number,
         instalationCost: number,
         regularPrice: number,
@@ -33,7 +33,7 @@ export class productEntity extends baseEntity{
         deletedOn: Date | null,
         createdByUserId: number
       ) {
-        super(ID,name);
+        super(documentId,name);
         this.detail = detail;
         this.typeCurrencyId = typeCurrencyId;
         this.typePaymentId = typePaymentId;

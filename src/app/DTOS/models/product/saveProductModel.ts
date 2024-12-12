@@ -2,11 +2,10 @@ import { typeCurrencyEntity } from "../../../entities/typeCurrencyEntity";
 import { typePaymentEntity } from "../../../entities/typePaymentEntity";
 
 export class saveProductModel {
-    public ID: number;
     public name: string;
     public detail: string;
-    public typeCurrencyId: number;
-    public typePaymentId: number;
+    public typeCurrencyId: string;
+    public typePaymentId: string;
     public implementationCost: number;
     public instalationCost: number;
     public regularPrice: number;
@@ -18,11 +17,10 @@ export class saveProductModel {
     constructor(...args : 
       []  |
       [
-        ID: number,
         name: string,
         detail: string,
-        typeCurrencyId: number,
-        typePaymentId: number,
+        typeCurrencyId: string,
+        typePaymentId: string,
         implementationCost: number,
         instalationCost: number,
         regularPrice: number,
@@ -32,11 +30,10 @@ export class saveProductModel {
       ]
       ) {
         if (args.length === 0) {
-          this.ID = 0;
           this.name = '';
           this.detail = '';
-          this.typeCurrencyId = 0;
-          this.typePaymentId =  0;
+          this.typeCurrencyId = '';
+          this.typePaymentId =  '';
           this.implementationCost = 0;
           this.instalationCost = 0;
           this.regularPrice = 0;
@@ -46,7 +43,6 @@ export class saveProductModel {
         } 
         else {
           [
-            this.ID,
             this.name,
             this.detail,
             this.typeCurrencyId,
