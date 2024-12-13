@@ -5,6 +5,7 @@
       <div class="button-group float-end">
         <a [routerLink]="['/save-product']" [queryParams]="{ Id: documentId }" class="btn btn-outline-warning m-1">Edit</a>
         <a href="detail-product" class="btn btn-outline-success">Detail</a>
+        <a [routerLink]="['/delete-product']" [queryParams]="{ Id: documentId, Name: name }" class="btn btn-outline-danger m-1">Delete</a>
       </div>
     </div>
   </div>

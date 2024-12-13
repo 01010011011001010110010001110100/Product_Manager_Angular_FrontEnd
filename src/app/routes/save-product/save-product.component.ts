@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { productService } from '../../services/productService';
 import { saveProductModel } from '../../DTOS/models/product/saveProductModel';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { typeCurrencyService } from '../../services/typeCurrencyService';
 import { typePaymentService } from '../../services/typePaymentService';
 import { typeCurrencyEntity } from '../../entities/typeCurrencyEntity';
@@ -14,7 +14,8 @@ import { editProductModel } from '../../DTOS/models/product/editProductModel';
 @Component({
   selector: 'app-save-product',
   imports: [
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './save-product.component.html',
   styleUrl: './save-product.component.css'
@@ -116,11 +117,5 @@ export class SaveProductComponent implements OnInit{
       this.router.navigate(['/list-products']);
     });
   }
-  
-  // Delete the product
-  public delete(): void {
-    this.productService.delete(this.model.documentId).subscribe(() => {
-      this.router.navigate(['/list-products']);
-    });
-  }
+
 }

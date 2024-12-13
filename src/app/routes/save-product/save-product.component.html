@@ -8,12 +8,7 @@
       }
     </h1>
     <div class="col-7 offset-3 border-secondary">
-        <form>
-          
-            <button type="submit" class="btn btn-outline-danger float-end mb-5" (click)="delete();">
-              <i class="bi bi-trash-fill"></i>
-            </button>
-
+        <form >
 
             <div class="form-row mb-3">
               <div class="form-group">
@@ -111,21 +106,26 @@
               </div>
             </div>
 
-            <div class="input-group mb-5">
-              <div class="form-row mb-3">
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [checked]="model.isActive" [(ngModel)]="model.isActive" name="isActive">
-                  <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+            @if (editMode) {
+              <div class="input-group mb-5">
+                <div class="form-row mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [checked]="model.isActive" [(ngModel)]="model.isActive" name="isActive">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+                  </div>
                 </div>
               </div>
-            </div>
+            }
           
 
-            @if (editMode) {
-              <button type="submit" class="btn btn-primary float-end" (click)="update();">Save</button>
-            } @else { 
-              <button type="submit" class="btn btn-primary float-end" (click)="create();">Create</button>
-            }
+            <div class="btn-group float-end">
+              <a class="btn btn-warning" [routerLink]="['/list-products']">Go Back</a>
+              @if (editMode) {
+                <button type="submit" class="btn btn-primary" (click)="update();">Save</button>
+              } @else { 
+                <button type="submit" class="btn btn-primary" (click)="create();">Create</button>
+              }
+            </div>
 
           </form>
     </div>

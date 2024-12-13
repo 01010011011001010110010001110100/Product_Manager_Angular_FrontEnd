@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { ApiResponse } from '../DTOS/response/ApiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +12,31 @@ export class ApiService {
 
     constructor(public http: HttpClient) {}
 
-    public getData(endpoint: string): Observable<any> {
+    public getData(endpoint: string): Observable<ApiResponse> {
         return this.http.get(`${this.baseUrl}/${endpoint}`).pipe(
-        catchError(this.handleError)
+            map((response) => {return response as ApiResponse}),
+            catchError(this.handleError)
         );
     }
 
     public postData(endpoint: string, body: any): Observable<any> {
         return this.http.post(`${this.baseUrl}/${endpoint}`, body).pipe(
-        catchError(this.handleError)
+            map((response) => {return response as ApiResponse}),
+            catchError(this.handleError)
         );
     }
 
     public updateData(endpoint: string, body: any, documentId: string): Observable<any> {
         return this.http.put(`${this.baseUrl}/${endpoint}/${documentId}`, body).pipe(
-        catchError(this.handleError)
+            map((response) => {return response as ApiResponse}),
+            catchError(this.handleError)
         );
     }
 
     public deleteData(endpoint: string, documentId: string): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${endpoint}/${documentId}`).pipe(
-        catchError(this.handleError)
+            map((response) => {return response as ApiResponse}),
+            catchError(this.handleError)
         );
     }
 

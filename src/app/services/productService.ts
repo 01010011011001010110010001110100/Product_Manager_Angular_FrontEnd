@@ -1,88 +1,53 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { IService } from "../interface/IService";
 import { productEntity } from "../entities/productEntity";
 import { ApiService } from "./ApiService";
 import { productModel } from "../DTOS/models/product/productModel";
 import { saveProductModel } from "../DTOS/models/product/saveProductModel";
-import { Observable, catchError, map, of } from "rxjs";
-import { createProductRequest } from "../DTOS/request/createProductRequest";
+import { Observable, map } from "rxjs";
+import { createProductRequest } from "../DTOS/request/product/createProductRequest";
 import { IRequestApi } from "../DTOS/request/ApiRequest";
 import { editProductModel } from "../DTOS/models/product/editProductModel";
-import { editProductRequest } from "../DTOS/request/editProductRequest";
+import { editProductRequest } from "../DTOS/request/product/editProductRequest";
+import { deleteProductModel } from "../DTOS/models/product/deleteProductModel";
+import { simulateDeleteProductRequest } from "../DTOS/request/product/simulateDeleteProductRequest";
+import { ApiResponse } from "../DTOS/response/ApiResponse";
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class productService implements IService<productModel,saveProductModel,editProductModel,productEntity>{
+export class productService implements IService<productModel,saveProductModel,editProductModel, deleteProductModel,productEntity>{
 
     constructor(public apiService: ApiService) {}
 
     getAll(): Observable<productModel[]> {
         return this.apiService.getData('products').pipe(
-            map((response: any) => {
-              return response.data.map((product: any) => new productModel(
-                    product.documentId, 
-                    product.name, 
-                    product.detail
-                )
-              );
+            map((response: ApiResponse) => {
+              return response.data as productModel[];
             })
         );
     }
 
     get(documentId: string): Observable<productEntity | null> {
-        return this.apiService.getData(`products/${documentId}?populate[typeCurrencyID][fields]=documentId&populate[typePaymentID][fields]=documentId`).pipe(
-            map((response: any) => {
-                if (response && response.data) {
-                    const productsResponse = response.data;
-                    return new productEntity(
-                        productsResponse.Id,
-                        productsResponse.name,
-                        productsResponse.detail,
-                        productsResponse.typeCurrencyID.documentId,
-                        productsResponse.typePaymentID.documentId,
-                        productsResponse.implementationCost,
-                        productsResponse.instalationCost,
-                        productsResponse.regularPrice,
-                        productsResponse.advancePrice,
-                        productsResponse.isActive,
-                        productsResponse.isDeleted,
-                        productsResponse.createdOn,
-                        productsResponse.updatedOn,
-                        productsResponse.deletedOn,
-                        productsResponse.createdByUserId
-                    );
+        return this.apiService.getData(`products/${documentId}`).pipe(
+            map((response: ApiResponse) => {
+                if (response.data) {
+                    return response.data as productEntity;
                 } else {
                     return null;
                 }
-            }),
-            catchError((error) => {
-                console.error(error);
-                return of(null); // En caso de error, devolvemos null
             })
         );
     }
     
 
+    // Personal of servicess
     getEditModel(documentId: string): Observable<editProductModel | null> {
-        return this.get(documentId).pipe(
-            map((entity: productEntity | null) => {
-                if (entity) {
-                    return new editProductModel(
-                        entity.documentId,
-                        entity.name,
-                        entity.detail,
-                        entity.typeCurrencyId,
-                        entity.typePaymentId,
-                        entity.implementationCost,
-                        entity.instalationCost,
-                        entity.regularPrice,
-                        entity.advancePrice,
-                        entity.isActive,
-                        null,
-                        null
-                    );
+        return this.apiService.getData(`products/${documentId}`).pipe(
+            map((response: ApiResponse) => {
+                if (response.data) {
+                    return response.data as editProductModel;
                 } else {
                     return null;
                 }
@@ -127,7 +92,12 @@ export class productService implements IService<productModel,saveProductModel,ed
         return this.apiService.updateData('products', request, editModel.documentId);
     }
 
-    delete(documentId: string): Observable<any> {
-        return this.apiService.deleteData('products',documentId);
+
+    delete(deleteModel: deleteProductModel): Observable<any> {
+
+        // Delete is no deleting just deactivate the register
+        const request: IRequestApi = new IRequestApi(new simulateDeleteProductRequest());
+
+        return this.apiService.updateData('products',request,deleteModel.documentId);
     }
 }

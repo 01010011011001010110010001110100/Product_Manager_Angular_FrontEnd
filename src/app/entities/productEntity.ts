@@ -1,4 +1,6 @@
 import { baseEntity } from "./general/baseEntity";
+import { typeCurrencyEntity } from "./typeCurrencyEntity";
+import { typePaymentEntity } from "./typePaymentEntity";
 
 export class productEntity extends baseEntity{
     public detail: string;
@@ -11,9 +13,13 @@ export class productEntity extends baseEntity{
     public isActive: boolean;
     public isDeleted: boolean;
     public createdOn: Date;
-    public updatedOn: Date | null;
-    public deletedOn: Date | null;
+    public updatedOn?: Date;
+    public deletedOn?: Date;
     public createdByUserId: number;
+
+    // Navegation Property
+    public typeCurrency?: typeCurrencyEntity;
+    public typePayment?: typePaymentEntity;
     
 
     constructor(
@@ -29,8 +35,8 @@ export class productEntity extends baseEntity{
         isActive: boolean,
         isDeleted: boolean,
         createdOn: Date,
-        updatedOn: Date | null,
-        deletedOn: Date | null,
+        updatedOn: Date | undefined,
+        deletedOn: Date | undefined,
         createdByUserId: number
       ) {
         super(documentId,name);

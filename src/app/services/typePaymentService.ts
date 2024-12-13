@@ -7,7 +7,7 @@ import { Injectable } from "@angular/core";
 @Injectable({
     providedIn: 'root'
 })
-export class typePaymentService implements IService<typePaymentEntity, typePaymentEntity, typePaymentEntity, typePaymentEntity> {
+export class typePaymentService implements IService<typePaymentEntity, typePaymentEntity, typePaymentEntity,typePaymentEntity, typePaymentEntity> {
 
     constructor(private apiService: ApiService) {}
 
@@ -47,7 +47,7 @@ export class typePaymentService implements IService<typePaymentEntity, typePayme
     update(editModel: typePaymentEntity): Observable<any> {
         throw new Error("Method not implemented.");
     }
-    delete(documentId: string): Observable<any> {
+    delete(deleteModel: typePaymentEntity): Observable<any> {
         throw new Error("Method not implemented.");
     }
 
