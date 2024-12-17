@@ -1,103 +1,100 @@
 import { Injectable } from "@angular/core";
-import { IService } from "../interface/IService";
 import { productEntity } from "../entities/productEntity";
-import { ApiService } from "./ApiService";
-import { productModel } from "../DTOS/models/product/productModel";
-import { saveProductModel } from "../DTOS/models/product/saveProductModel";
-import { Observable, map } from "rxjs";
-import { createProductRequest } from "../DTOS/request/product/createProductRequest";
-import { IRequestApi } from "../DTOS/request/ApiRequest";
+import { ApiRequest } from "../DTOS/request/ApiRequest";
 import { editProductModel } from "../DTOS/models/product/editProductModel";
+import { genericService } from "./common/genericService";
+import { IProductService } from "../interfaces/services/IProductService";
+import { productRepository } from "../repositories/productRepository";
+import { map, Observable } from "rxjs";
+import { objectHelper } from "../helpers/objectHelper";
+import { createProductRequest } from "../DTOS/request/product/createProductRequest";
 import { editProductRequest } from "../DTOS/request/product/editProductRequest";
-import { deleteProductModel } from "../DTOS/models/product/deleteProductModel";
 import { simulateDeleteProductRequest } from "../DTOS/request/product/simulateDeleteProductRequest";
-import { ApiResponse } from "../DTOS/response/ApiResponse";
+import { productModel } from "../DTOS/models/product/productModel";
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class productService implements IService<productModel,saveProductModel,editProductModel, deleteProductModel,productEntity>{
+export class productService extends genericService<productEntity, createProductRequest, editProductRequest, simulateDeleteProductRequest, ApiRequest> implements IProductService{ 
 
-    constructor(public apiService: ApiService) {}
-
-    getAll(): Observable<productModel[]> {
-        return this.apiService.getData('products').pipe(
-            map((response: ApiResponse) => {
-              return response.data as productModel[];
-            })
-        );
+    constructor(repository: productRepository) {
+        super(repository, ApiRequest);
     }
 
-    get(documentId: string): Observable<productEntity | null> {
-        return this.apiService.getData(`products/${documentId}`).pipe(
-            map((response: ApiResponse) => {
-                if (response.data) {
-                    return response.data as productEntity;
-                } else {
-                    return null;
-                }
-            })
-        );
-    }
-    
 
     // Personal of servicess
-    getEditModel(documentId: string): Observable<editProductModel | null> {
-        return this.apiService.getData(`products/${documentId}`).pipe(
-            map((response: ApiResponse) => {
-                if (response.data) {
-                    return response.data as editProductModel;
+    getEditModel(documentId: string): Observable<editProductModel | undefined> {
+        return super.get(documentId).pipe(
+            map((response: productEntity | undefined) => {
+                if (response) {
+                    return objectHelper.mapMatchingProperties(new editProductModel(), response);
                 } else {
-                    return null;
+                    return undefined;
                 }
             })
         );
     }
-    
-    
-    add(saveModel: saveProductModel): Observable<any> {
-        let request: IRequestApi = new IRequestApi(
-            new createProductRequest(
-                saveModel.name,
-                saveModel.detail,
-                saveModel.typeCurrencyId,
-                saveModel.typePaymentId,
-                saveModel.implementationCost,
-                saveModel.instalationCost,
-                saveModel.regularPrice,
-                saveModel.advancePrice
-            )
-        );
 
-        return this.apiService.postData('products', request);
+
+    // Get all entitys and convert to product model
+    getAllModel(): Observable<productModel[]> {
+        return super.getAll().pipe(
+            map((products: productEntity[]) => products.map(product => objectHelper.mapMatchingProperties(new productModel(), product)))
+        );
     }
 
 
-    update(editModel: editProductModel): Observable<any> {
-        let request: IRequestApi = new IRequestApi(
-            new editProductRequest(
-                editModel.name,
-                editModel.detail,
-                editModel.typeCurrencyId,
-                editModel.typePaymentId,
-                editModel.implementationCost,
-                editModel.instalationCost,
-                editModel.regularPrice,
-                editModel.advancePrice,
-                editModel.isActive
+    // Get all the product filtered
+    getAllModelFiltered(filters: { property: string, value: any }[]): Observable<productModel[]> {
+        return this.getAll().pipe(
+            map(
+                (products: Record<string, any>[]) => products
+                .filter(product => 
+                    filters.every(filter => product[filter.property] === filter.value)
+                )
+                .map(product => 
+                    objectHelper.mapMatchingProperties(new productModel(), product)
+                )
             )
         );
-
-        return this.apiService.updateData('products', request, editModel.documentId);
     }
 
 
-    delete(deleteModel: deleteProductModel): Observable<any> {
+    // Set some config before create the product
+    override add(createRequest: createProductRequest): Observable<productEntity> {
+        // Defualt config
+        createRequest.typeCurrency = createRequest.typeCurrencyId;
+        createRequest.typePayment = createRequest.typePaymentId;
+        createRequest.isActive = true;
+        createRequest.isDeleted = false;
+        createRequest.createdOn = new Date().toISOString();
 
-        // Delete is no deleting just deactivate the register
-        const request: IRequestApi = new IRequestApi(new simulateDeleteProductRequest());
+        // Send to add
+        return super.add(createRequest);
+    }
 
-        return this.apiService.updateData('products',request,deleteModel.documentId);
+
+    // Set some config before update the product
+    override update(editRequest: editProductRequest, documentId: string): Observable<productEntity> {
+        // Defualt config
+        editRequest.typeCurrency = editRequest.typeCurrencyId;
+        editRequest.typePayment = editRequest.typePaymentId;
+        editRequest.updateOn = new Date().toISOString();
+
+        // Send to update
+        return super.update(editRequest, documentId);
+    }
+
+    
+    // Set some config before sumlate the delete
+    override simulateDelete(simulateDeleteRequest: simulateDeleteProductRequest,documentId: string): Observable<productEntity> {
+        // Defualt config
+        simulateDeleteRequest.isActive = false;
+        simulateDeleteRequest.isDeleted = true;
+        simulateDeleteRequest.deletedOn = new Date().toISOString();
+
+        // Go to simulate the delete updating it
+        return super.simulateDelete(simulateDeleteRequest, documentId);
     }
 }

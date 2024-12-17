@@ -27,7 +27,10 @@
             <div class="form-row mb-3">
               <div class="input-group">
                 <select class="custom-select" id="typeCurrencyId" [(ngModel)]="model.typeCurrencyId" name="typeCurrencyId">
-                  <option [value]="'0'">Choose...</option>
+                  @if (model.listTypeCurrencies.length == 0) 
+                  {
+                    <option [value]="'0'" selected>No currencies aviable</option>
+                  } 
                   @for (typeCurrency of model.listTypeCurrencies; track $index) {
                     <option [value]="typeCurrency.documentId" [selected]="typeCurrency.documentId == model.typeCurrencyId">{{typeCurrency.ISO2}}</option>
                   }
@@ -41,7 +44,10 @@
             <div class="form-row mb-3">
               <div class="input-group">
                 <select class="custom-select" id="typePaymentId" [(ngModel)]="model.typePaymentId" name="typePaymentId">
-                  <option selected [value]="'0'">Choose...</option>
+                  @if (model.listTypePayments.length == 0) 
+                  {
+                    <option [value]="'0'" selected>No payments aviable</option>
+                  } 
                   @for (typePayment of model.listTypePayments; track $index) {
                     <option [value]="typePayment.documentId" [selected]="typePayment.documentId == model.typePaymentId">{{typePayment.name}}</option>
                   }

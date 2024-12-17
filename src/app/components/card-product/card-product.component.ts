@@ -10,13 +10,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './card-product.component.css'
 })
 export class CardProductComponent {
-  @Input() documentId: string;
-  @Input() name: string;
-  @Input() detail: string;
-
-  constructor() {
-    this.documentId = '';
-    this.name = '';
-    this.detail = '';
-  }
+  @Input() documentId?: string;
+  @Input() name?: string;
+  @Input() detail?: string;
 }

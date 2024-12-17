@@ -1,4 +1,7 @@
 <div class="d-flex flex-wrap gap-5">
+    @if (products.length == 0) {
+        <h1>There are no registered products yet</h1>
+    }
     @for (product of products; track $index) {
         <card-product 
             [documentId]="product.documentId"

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { deleteProductModel } from '../../DTOS/models/product/deleteProductModel';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { productService } from '../../services/productService';
+import { simulateDeleteProductRequest } from '../../DTOS/request/product/simulateDeleteProductRequest';
 
 @Component({
   selector: 'app-delete-product',
@@ -37,7 +38,7 @@ export class DeleteProductComponent implements OnInit{
 
   // Delete the product
   public delete(): void {
-    this.productService.delete(this.model).subscribe(() => {
+    this.productService.simulateDelete(new simulateDeleteProductRequest(), this.model.documentId).subscribe(() => {
       this.router.navigate(['/list-products']);
     });
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { productService } from '../../services/productService';
-import { saveProductModel } from '../../DTOS/models/product/saveProductModel';
+import { createProductModel } from '../../DTOS/models/product/createProductModel';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { typeCurrencyService } from '../../services/typeCurrencyService';
@@ -9,6 +9,9 @@ import { typeCurrencyEntity } from '../../entities/typeCurrencyEntity';
 import { typePaymentEntity } from '../../entities/typePaymentEntity';
 import { Observable, forkJoin, map } from 'rxjs';
 import { editProductModel } from '../../DTOS/models/product/editProductModel';
+import { objectHelper } from '../../helpers/objectHelper';
+import { createProductRequest } from '../../DTOS/request/product/createProductRequest';
+import { editProductRequest } from '../../DTOS/request/product/editProductRequest';
 
 
 @Component({
@@ -41,7 +44,7 @@ export class SaveProductComponent implements OnInit{
     // Initialize vars
     this.currentCurrencies = [];
     this.currentPayments = [];
-    this.model = new saveProductModel();
+    this.model = new createProductModel();
     this.editMode = false;
   }
 
@@ -59,7 +62,7 @@ export class SaveProductComponent implements OnInit{
       this.loadListValues().subscribe(() => {
         if (this.editMode) 
         {
-          this.productService.getEditModel(productId).subscribe((model: editProductModel | null) => {
+          this.productService.getEditModel(productId).subscribe((model: editProductModel | undefined) => {
             if (model) {
               this.model = model;
               this.model.documentId = productId;
@@ -69,7 +72,7 @@ export class SaveProductComponent implements OnInit{
         } 
         else 
         {
-          this.model = new saveProductModel();
+          this.model = new createProductModel();
           this.loadListValuesInModel();
         }
       });
@@ -106,14 +109,14 @@ export class SaveProductComponent implements OnInit{
 
   // Create the product and go to the lists
   public create(): void {
-    this.productService.add(this.model).subscribe(() => {
+    this.productService.add(objectHelper.mapMatchingProperties(new createProductRequest(), this.model)).subscribe(() => {
       this.router.navigate(['/list-products']);
     });
   }
 
   // Edit the product
   public update(): void {
-    this.productService.update(this.model).subscribe(() => {
+    this.productService.update(objectHelper.mapMatchingProperties(new editProductRequest(), this.model), this.model.documentId).subscribe(() => {
       this.router.navigate(['/list-products']);
     });
   }

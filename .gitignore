@@ -1,5 +1,9 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
+# Project
+/src/app/environments/environment.prod.ts
+/src/app/environments/environment.ts
+
 # Compiled output
 /dist
 /tmp

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CardProductComponent } from '../../components/card-product/card-product.component';
 import { productService } from '../../services/productService';
 import { productModel } from '../../DTOS/models/product/productModel';
@@ -13,16 +13,16 @@ import { productModel } from '../../DTOS/models/product/productModel';
 })
 export class ListProductsComponent {
 
-   public products: productModel[];
+  public products: productModel[];
 
-   constructor(public service: productService) {
-    // Initialize variables
-    this.products = [];
+  constructor(public service: productService) {
+  // Initialize variables
+  this.products = [];
 
-    // Fill with productz
-    service.getAll().subscribe((products) => {
-      this.products = products;
-    });
-   }
+  // Fill with productz
+  service.getAllModelFiltered([{property: "isDeleted", value: false}]).subscribe((products) => {
+    this.products = products;
+  });
+  }
    
 }
