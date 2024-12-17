@@ -15,7 +15,6 @@ export class productEntity extends baseEntity{
     public createdOn: Date;
     public updatedOn?: Date;
     public deletedOn?: Date;
-    public createdByUserId: number;
 
     // Navegation Property
     public typeCurrency?: typeCurrencyEntity;
@@ -52,7 +51,6 @@ export class productEntity extends baseEntity{
         this.createdOn = createdOn;
         this.updatedOn = updatedOn;
         this.deletedOn = deletedOn;
-        this.createdByUserId = createdByUserId;
     }
     
 }

@@ -1,0 +1,9 @@
+<div class="card border-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-body text-secondary"> 
+        <h4 class="card-title text-center"> Are you sure you wan to delete: {{model.name}}</h4>
+        <div class="button-group float-end">
+            <button [routerLink]="['/list-clients']" class="btn btn-outline-warning m-1">Go Back</button>
+            <button (click)="delete();" class="btn btn-outline-danger m-1">Delete</button>
+        </div>
+    </div>
+</div>

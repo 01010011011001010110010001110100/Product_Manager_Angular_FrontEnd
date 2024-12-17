@@ -1,0 +1,50 @@
+<div class="row">
+    <h1 class="ol-7 offset-3 mb-5">
+      @if (editMode){
+        Editing Client
+      }
+      @else{
+        Creating Client
+      }
+    </h1>
+    <div class="col-7 offset-3 border-secondary">
+        <form >
+
+            <div class="form-row mb-3">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" placeholder="Name" id="name" [(ngModel)]="model.name" name="name">
+              </div>
+            </div>
+
+            <div class="form-row mb-3">
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" class="form-control" placeholder="Phone Number" id="phoneNumber" [(ngModel)]="model.phoneNumber" name="phoneNumber">
+              </div>
+            </div>
+
+            @if (editMode) {
+              <div class="input-group mb-5">
+                <div class="form-row mb-3">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [checked]="model.isActive" [(ngModel)]="model.isActive" name="isActive">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+                  </div>
+                </div>
+              </div>
+            }
+          
+
+            <div class="btn-group float-end">
+              <a class="btn btn-warning" [routerLink]="['/list-clients']">Go Back</a>
+              @if (editMode) {
+                <button type="submit" class="btn btn-primary" (click)="update();">Save</button>
+              } @else { 
+                <button type="submit" class="btn btn-primary" (click)="create();">Create</button>
+              }
+            </div>
+
+          </form>
+    </div>
+</div>

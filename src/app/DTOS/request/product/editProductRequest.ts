@@ -8,7 +8,7 @@ export class editProductRequest {
     public regularPrice?: number;
     public advancePrice?: number;
     public isActive?: boolean;
-    public updateOn?: string;
+    public updatedOn?: string;
     
     // Relationships with other tables
     public typeCurrency?: string;

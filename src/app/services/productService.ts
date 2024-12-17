@@ -80,7 +80,7 @@ export class productService extends genericService<productEntity, createProductR
         // Defualt config
         editRequest.typeCurrency = editRequest.typeCurrencyId;
         editRequest.typePayment = editRequest.typePaymentId;
-        editRequest.updateOn = new Date().toISOString();
+        editRequest.updatedOn = new Date().toISOString();
 
         // Send to update
         return super.update(editRequest, documentId);

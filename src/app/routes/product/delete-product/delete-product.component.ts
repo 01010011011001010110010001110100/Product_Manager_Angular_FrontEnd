@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { deleteProductModel } from '../../DTOS/models/product/deleteProductModel';
+import { deleteProductModel } from '../../../DTOS/models/product/deleteProductModel';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { productService } from '../../services/productService';
-import { simulateDeleteProductRequest } from '../../DTOS/request/product/simulateDeleteProductRequest';
+import { productService } from '../../../services/productService';
+import { simulateDeleteProductRequest } from '../../../DTOS/request/product/simulateDeleteProductRequest';
 
 @Component({
   selector: 'app-delete-product',

@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { productService } from '../../services/productService';
-import { createProductModel } from '../../DTOS/models/product/createProductModel';
+import { productService } from '../../../services/productService';
+import { createProductModel } from '../../../DTOS/models/product/createProductModel';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { typeCurrencyService } from '../../services/typeCurrencyService';
-import { typePaymentService } from '../../services/typePaymentService';
-import { typeCurrencyEntity } from '../../entities/typeCurrencyEntity';
-import { typePaymentEntity } from '../../entities/typePaymentEntity';
+import { typeCurrencyService } from '../../../services/typeCurrencyService';
+import { typePaymentService } from '../../../services/typePaymentService';
+import { typeCurrencyEntity } from '../../../entities/typeCurrencyEntity';
+import { typePaymentEntity } from '../../../entities/typePaymentEntity';
 import { Observable, forkJoin, map } from 'rxjs';
-import { editProductModel } from '../../DTOS/models/product/editProductModel';
-import { objectHelper } from '../../helpers/objectHelper';
-import { createProductRequest } from '../../DTOS/request/product/createProductRequest';
-import { editProductRequest } from '../../DTOS/request/product/editProductRequest';
+import { editProductModel } from '../../../DTOS/models/product/editProductModel';
+import { objectHelper } from '../../../helpers/objectHelper';
+import { createProductRequest } from '../../../DTOS/request/product/createProductRequest';
+import { editProductRequest } from '../../../DTOS/request/product/editProductRequest';
 
 
 @Component({
