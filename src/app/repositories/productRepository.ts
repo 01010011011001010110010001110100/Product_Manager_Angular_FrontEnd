@@ -2,10 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import { ApiRequest } from "../DTOS/request/ApiRequest";
 import { genericRepository } from "./common/genericRepository";
 import { IProductRepository } from "../interfaces/repositories/IProductRepository";
-import { environment } from "../environments/environment";
 import { Injectable } from "@angular/core";
 import { productEntity } from "../entities/productEntity";
 import { STRAPPI_END_POINTS } from "../enums/STRAPPI_END_POINTS";
+import { configService } from "../services/configService";
 
 
 @Injectable({
@@ -13,10 +13,13 @@ import { STRAPPI_END_POINTS } from "../enums/STRAPPI_END_POINTS";
 })
 export class productRepository extends genericRepository<productEntity, ApiRequest, any> implements IProductRepository {
 
-    constructor(http: HttpClient) 
+    constructor(http: HttpClient, configurationService: configService) 
     {
-        const baseUrl: string = environment.apiBaseUrl;
-        const endpoint: string = STRAPPI_END_POINTS.PRODUCTS;
-        super(http, baseUrl, endpoint, "data");
+        super(
+          http, 
+          configurationService.getConfigs().apiBaseUrl,
+          STRAPPI_END_POINTS.PRODUCTS,
+          "data"
+        );
     }
 }

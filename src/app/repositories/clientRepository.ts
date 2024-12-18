@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { STRAPPI_END_POINTS } from "../enums/STRAPPI_END_POINTS";
-import { environment } from "../environments/environment";
 import { genericRepository } from "./common/genericRepository";
 import { clientEntity } from "../entities/clientEntity";
 import { ApiRequest } from "../DTOS/request/ApiRequest";
 import { HttpClient } from "@angular/common/http";
 import { IClientRepository } from "../interfaces/repositories/IClientRepository";
+import { configService } from "../services/configService";
 
 
 @Injectable({
@@ -13,10 +13,13 @@ import { IClientRepository } from "../interfaces/repositories/IClientRepository"
 })
 export class clientRepository extends genericRepository<clientEntity, ApiRequest, any> implements IClientRepository {
 
-    constructor(http: HttpClient) 
+    constructor(http: HttpClient, configurationService: configService) 
     {
-        const baseUrl: string = environment.apiBaseUrl;
-        const endpoint: string = STRAPPI_END_POINTS.CLIENTS;
-        super(http, baseUrl, endpoint, "data");
+        super(
+          http, 
+          configurationService.getConfigs().apiBaseUrl,
+          STRAPPI_END_POINTS.CLIENTS,
+          "data"
+        );
     }
 }

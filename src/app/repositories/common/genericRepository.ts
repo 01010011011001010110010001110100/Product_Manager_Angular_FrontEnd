@@ -6,15 +6,15 @@ import { IGenericRepository } from "../../interfaces/repositories/IGenericReposi
 export class genericRepository<entity, request, responseContent extends keyof Object> implements IGenericRepository<entity, request> {
 
     // Vars
-    private http: HttpClient;
-    private baseUrl: string;
-    private endpoint: string;
-    private responseContentKey: responseContent;
+    protected http: HttpClient;
+    protected baseUrl: string;
+    protected endpoint: string;
+    protected responseContentKey: responseContent;
 
     constructor(
         http: HttpClient,
         baseUrl: string, 
-        endpoint: string, 
+        endpoint: string,
         responseContentKey: responseContent
     ) {
         this.http = http;

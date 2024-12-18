@@ -10,7 +10,7 @@ import { DeleteClientComponent } from './routes/client/delete-client/delete-clie
 export const routes: Routes = [
     { path: '', component: AboutPageComponent},
     { path: 'about-page', component: AboutPageComponent},
-    { path: 'list-products', component: ListProductsComponent},
+    { path: 'list-products', component: ListProductsComponent },
     { path: 'save-product', component: SaveProductComponent},
     { path: 'delete-product', component: DeleteProductComponent },
     { path: 'list-clients', component: ListClientsComponent },
