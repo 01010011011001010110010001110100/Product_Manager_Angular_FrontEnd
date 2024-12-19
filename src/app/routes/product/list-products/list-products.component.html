@@ -4,7 +4,7 @@
             <div class="main-tittle">
                 <h1 class="text-white">Products / Services</h1>
             </div>
-            <a [routerLink]="['/save-product']" class="btn btn-success d-flex align-items-center">+Add</a>
+            <a [routerLink]="['/create-product']" class="btn btn-success d-flex align-items-center">+Add</a>
         </div>
     </div>
     @if (products.length == 0) {
@@ -36,13 +36,13 @@
                                       <td>{{product.name}}</td>
                                       <td class="">{{product.detail}}</td>
                                       <td>
-                                        <a [routerLink]="['/save-product']" [queryParams]="{ Id: product.documentId }" class="btn btn-warning m-1">
+                                        <a [routerLink]="['/edit-product']" [queryParams]="{ documentId: product.documentId }" class="btn btn-warning m-1">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
                                         <a href="detail-product" class="btn btn-success">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
-                                        <a [routerLink]="['/delete-product']" [queryParams]="{ Id: product.documentId, Name: product.name }" class="btn btn-danger m-1">
+                                        <a [routerLink]="['/delete-product']" [queryParams]="{ documentId: product.documentId, Name: product.name }" class="btn btn-danger m-1">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>
                                       </td>
