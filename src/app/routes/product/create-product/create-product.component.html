@@ -1,7 +1,12 @@
 <div class="row">
-    <h1 class="ol-7 offset-3 mb-5">
-        Create Product
-    </h1>
+    <div class="col-7 offset-3 mb-5 d-flex flex-row justify-content-between p-0 gap-2">
+      <a [routerLink]="['/list-products']" class="btn btn-warning d-flex align-items-center">
+        <i class="bi bi-arrow-return-left"></i>
+      </a>
+      <div class="main-tittle">
+          <h1 class="text-white">Creating Product / Service</h1>
+      </div>
+    </div>
     <div class="col-7 offset-3 border-secondary">
         <form >
 
@@ -108,10 +113,7 @@
             </div>
 
             
-            <div class="btn-group float-end">
-                <a class="btn btn-warning" [routerLink]="['/list-products']">Go Back</a>
-                <button type="submit" class="btn btn-primary" (click)="create();">Create</button>
-            </div>
+            <button type="submit" class="btn btn-primary float-end" (click)="create();">Create</button>
 
           </form>
     </div>
