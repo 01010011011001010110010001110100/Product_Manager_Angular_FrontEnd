@@ -8,28 +8,46 @@
       </div>
     </div>
     <div class="col-7 offset-3 border-secondary">
-        <form >
+        <form [formGroup]="mainForm" (ngSubmit)="create();">
 
             <div class="form-row mb-3">
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" placeholder="Name" id="name" [(ngModel)]="model.name" name="name">
+                <input type="text" class="form-control" placeholder="Name" id="name" formControlName="name" required>
+
+                <div class="text-danger">
+                  @if (name.invalid && (name.dirty || name.touched)) {
+                    @if (name.hasError('required')) {
+                      * The name is oblgatory.
+                    }
+                  }
+                </div>
+
               </div>
             </div>
 
             <div class="form-row mb-3">
               <div class="form-group">
                 <label for="detail">Detail</label>
-                <textarea class="form-control" aria-label="With textarea" id="detail" [(ngModel)]="model.detail" name="detail"></textarea>
+                <textarea class="form-control" aria-label="With textarea" id="detail" formControlName="detail" required></textarea>
+
+                <div class="text-danger">
+                  @if (detail.invalid && (detail.dirty || detail.touched)) {
+                    @if (detail.hasError('required')) {
+                      * The detail is oblgatory.
+                    }
+                  }
+                </div>
+
               </div>
             </div>
 
             <div class="form-row mb-3">
               <div class="input-group">
-                <select class="custom-select" id="typeCurrencyId" [(ngModel)]="model.typeCurrencyId" name="typeCurrencyId">
+                <select class="custom-select" id="typeCurrencyId" formControlName="typeCurrencyId">
                   @if (model.listTypeCurrencies.length == 0) 
                   {
-                    <option [value]="'0'" selected>No currencies aviable</option>
+                    <option [value]="0" selected>No currencies aviable</option>
                   } 
                   @for (typeCurrency of model.listTypeCurrencies; track $index) {
                     <option [value]="typeCurrency.documentId" [selected]="typeCurrency.documentId == model.typeCurrencyId">{{typeCurrency.ISO2}}</option>
@@ -43,10 +61,10 @@
 
             <div class="form-row mb-3">
               <div class="input-group">
-                <select class="custom-select" id="typePaymentId" [(ngModel)]="model.typePaymentId" name="typePaymentId">
+                <select class="custom-select" id="typePaymentId" formControlName="typePaymentId">
                   @if (model.listTypePayments.length == 0) 
                   {
-                    <option [value]="'0'" selected>No payments aviable</option>
+                    <option [value]="0" selected>No payments aviable</option>
                   } 
                   @for (typePayment of model.listTypePayments; track $index) {
                     <option [value]="typePayment.documentId" [selected]="typePayment.documentId == model.typePaymentId">{{typePayment.name}}</option>
@@ -66,7 +84,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">$</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="implementationCost" [(ngModel)]="model.implementationCost" name="implementationCost">
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="implementationCost" formControlName="implementationCost">
               </div>
             </div>
 
@@ -78,7 +96,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">$ </span>
                 </div>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="instalationCost" [(ngModel)]="model.instalationCost" name="instalationCost">
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="instalationCost" formControlName="instalationCost">
               </div>
             </div>
 
@@ -95,7 +113,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                   </div>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="regularPrice" [(ngModel)]="model.regularPrice" name="regularPrice">
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="regularPrice" formControlName="regularPrice">
                 </div>
               </div>
   
@@ -107,13 +125,13 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                   </div>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="advancePrice" [(ngModel)]="model.advancePrice" name="advancePrice">
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="advancePrice" formControlName="advancePrice">
                 </div>
               </div>
             </div>
 
             
-            <button type="submit" class="btn btn-primary float-end" (click)="create();">Create</button>
+            <button type="submit" class="btn btn-primary float-end">Create</button>
 
           </form>
     </div>
