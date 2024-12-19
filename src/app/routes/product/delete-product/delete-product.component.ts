@@ -30,7 +30,7 @@ export class DeleteProductComponent implements OnInit{
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
         // Load parameters in the model
-        this.model.documentId = params['Id'];
+        this.model.documentId = params['documentId'];
         this.model.name = params['Name'];
     });
   }
