@@ -3,7 +3,7 @@
       <a [routerLink]="['/list-products']" class="btn btn-warning d-flex align-items-center">
         <i class="bi bi-arrow-return-left"></i>
       </a>
-      <div class="main-tittle">
+      <div class="main-tittle" (click)="test();">
           <h1 class="text-white">Creating Product / Service</h1>
       </div>
     </div>
@@ -12,13 +12,15 @@
 
             <div class="form-row mb-3">
               <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">
+                  Name <field-validation-mark [isValid]="!name.touched || name.valid"/>
+                </label>
                 <input type="text" class="form-control" placeholder="Name" id="name" formControlName="name" required>
 
                 <div class="text-danger">
                   @if (name.invalid && (name.dirty || name.touched)) {
                     @if (name.hasError('required')) {
-                      * The name is oblgatory.
+                      The name is obligatory.
                     }
                   }
                 </div>
@@ -28,13 +30,15 @@
 
             <div class="form-row mb-3">
               <div class="form-group">
-                <label for="detail">Detail</label>
+                <label for="detail">
+                  Detail <field-validation-mark [isValid]="!detail.touched || detail.valid"/>
+                </label>
                 <textarea class="form-control" aria-label="With textarea" id="detail" formControlName="detail" required></textarea>
 
                 <div class="text-danger">
                   @if (detail.invalid && (detail.dirty || detail.touched)) {
                     @if (detail.hasError('required')) {
-                      * The detail is oblgatory.
+                      * The detail is obligatory.
                     }
                   }
                 </div>
@@ -54,8 +58,17 @@
                   }
                 </select>
                 <div class="input-group-append">
-                  <label class="input-group-text" for="typeCurrencyId">Currency</label>
+                  <label class="input-group-text gap-1" for="typeCurrencyId">
+                    Currency <field-validation-mark [isValid]="true"/>
+                  </label>
                 </div>
+              </div>
+              <div class="text-danger">
+                @if (typeCurrencyId.invalid && (typeCurrencyId.dirty || typeCurrencyId.touched)) {
+                  @if (typeCurrencyId.hasError('max')) {
+                    This option is not valid
+                  }
+                }
               </div>
             </div>
 
@@ -131,7 +144,7 @@
             </div>
 
             
-            <button type="submit" class="btn btn-primary float-end">Create</button>
+            <button type="submit" class="btn btn-primary float-end" [disabled]="!mainForm.valid">Create</button>
 
           </form>
     </div>

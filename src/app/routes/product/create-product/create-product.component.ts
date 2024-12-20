@@ -9,13 +9,15 @@ import { typeCurrencyEntity } from '../../../entities/typeCurrencyEntity';
 import { typePaymentEntity } from '../../../entities/typePaymentEntity';
 import { objectHelper } from '../../../helpers/objectHelper';
 import { createProductRequest } from '../../../DTOS/request/product/createProductRequest';
+import { FieldValidationMarkComponent } from '../../../components/field-validation-mark/field-validation-mark.component';
 
 @Component({
   selector: 'app-create-product',
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    RouterLink
+    RouterLink,
+    FieldValidationMarkComponent
   ],
   templateUrl: './create-product.component.html',
   styleUrl: './create-product.component.css'
@@ -109,4 +111,9 @@ export class CreateProductComponent implements OnInit{
     get instalationCost() { return this.mainForm.get('instalationCost')!; }
     get regularPrice() { return this.mainForm.get('regularPrice')!; }
     get advancePrice() { return this.mainForm.get('advancePrice')!; }
+
+
+    public test(): void {
+      console.log(this.model.typeCurrencyId);
+    }
 }
