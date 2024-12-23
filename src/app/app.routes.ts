@@ -8,23 +8,24 @@ import { CreateProductComponent } from './routes/product/create-product/create-p
 import { EditProductComponent } from './routes/product/edit-product/edit-product.component';
 import { CreateClientComponent } from './routes/client/create-client/create-client.component';
 import { EditClientComponent } from './routes/client/edit-client/edit-client.component';
+import { EROUTES } from './enums/EROUTES';
 
 export const routes: Routes = [
     // Default route (the main one)
-    { path: '', component: AboutPageComponent},
+    { path: EROUTES.BASE, component: AboutPageComponent},
 
     // General routes
-    { path: 'about-page', component: AboutPageComponent},
+    { path: EROUTES.ABOUT_PAGE, component: AboutPageComponent},
 
     // Product routes
-    { path: 'list-products', component: ListProductsComponent },
-    { path: 'create-product', component: CreateProductComponent},
-    { path: 'edit-product', component: EditProductComponent},
-    { path: 'delete-product', component: DeleteProductComponent },
+    { path: EROUTES.LIST_PRODUCTS, component: ListProductsComponent },
+    { path: EROUTES.CREATE_PRODUCT, component: CreateProductComponent},
+    { path: EROUTES.EDIT_PRODUCT, component: EditProductComponent},
+    { path: EROUTES.DELETE_PRODUCT, component: DeleteProductComponent },
 
     // Client routes
-    { path: 'list-clients', component: ListClientsComponent },
-    { path: 'create-client', component: CreateClientComponent },
-    { path: 'edit-client', component: EditClientComponent },
-    { path: 'delete-client', component: DeleteClientComponent }
+    { path: EROUTES.LIST_CLIENTS, component: ListClientsComponent },
+    { path: EROUTES.CREATE_CLIENT, component: CreateClientComponent },
+    { path: EROUTES.EDIT_CLIENT, component: EditClientComponent },
+    { path: EROUTES.DELETE_CLIENT, component: DeleteClientComponent }
 ];

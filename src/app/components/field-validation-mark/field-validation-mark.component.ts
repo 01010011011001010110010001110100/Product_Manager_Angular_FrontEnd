@@ -1,16 +1,47 @@
-import { Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'field-validation-mark',
-  imports: [],
+  imports: [
+    NgClass
+  ],
   templateUrl: './field-validation-mark.component.html',
   styleUrl: './field-validation-mark.component.css'
 })
-export class FieldValidationMarkComponent {
+export class FieldValidationMarkComponent implements OnInit{
+
   // Vars
-  @Input() public isValid: boolean;
+  public isValid: boolean;
+  public currentClases: Record<string, boolean>;
+
+  // Vars
+  @Input() public myControl?: AbstractControl;
+
 
   constructor() {
-    this.isValid = false;
+    // Initialize vars
+    this.isValid = true;
+    this.currentClases = {};
+    this.updateStyles();
+  }
+
+
+  ngOnInit(): void {
+    // Always evaluate validation when ocurss an event
+    this.myControl?.events.subscribe(() => {
+      this.isValid = this.myControl?.valid!;
+      this.updateStyles();
+    });
+  }
+  
+
+  private updateStyles(): void {
+    this.currentClases = {
+      'text-danger': !this.isValid,
+      'text-secondary': this.isValid,
+      'fw-bold': !this.isValid
+    }
   }
 }

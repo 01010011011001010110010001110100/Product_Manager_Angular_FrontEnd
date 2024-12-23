@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { createProductModel } from '../../../DTOS/models/product/createProductModel';
 import { productService } from '../../../services/productService';
 import { typeCurrencyService } from '../../../services/typeCurrencyService';
 import { typePaymentService } from '../../../services/typePaymentService';
 import { typeCurrencyEntity } from '../../../entities/typeCurrencyEntity';
 import { typePaymentEntity } from '../../../entities/typePaymentEntity';
-import { objectHelper } from '../../../helpers/objectHelper';
+import { objectHelper } from '../../../helpers/others/objectHelper';
 import { createProductRequest } from '../../../DTOS/request/product/createProductRequest';
 import { FieldValidationMarkComponent } from '../../../components/field-validation-mark/field-validation-mark.component';
+import { FieldValidationMessageComponent } from '../../../components/field-validation-message/field-validation-message.component';
+import { formFieldsValidatorHelper } from '../../../helpers/others/formFieldsValidatorsHelper';
+import { routerDecorated } from '../../../helpers/extensionClasses/routerDecorated';
 
 @Component({
-  selector: 'app-create-product',
+  selector: 'create-product',
   imports: [
     ReactiveFormsModule,
     FormsModule,
     RouterLink,
-    FieldValidationMarkComponent
+    FieldValidationMarkComponent,
+    FieldValidationMessageComponent
   ],
   templateUrl: './create-product.component.html',
   styleUrl: './create-product.component.css'
@@ -33,10 +37,10 @@ export class CreateProductComponent implements OnInit{
     private typePaymentService: typePaymentService;
 
     // Router Modules
-    private router: Router;
-    private route: ActivatedRoute;
+    public router: routerDecorated;
 
     // Controls of the form
+    private formBuilder: FormBuilder
     public mainForm: FormGroup;
 
 
@@ -44,17 +48,18 @@ export class CreateProductComponent implements OnInit{
       productService: productService,
       typeCurrencyService: typeCurrencyService,
       typePaymentService: typePaymentService,
-      router: Router,
-      route: ActivatedRoute
+      router: routerDecorated
     ) {
+      // Injections
+      this.formBuilder = inject(FormBuilder);
+
       // Initialize vars
       this.model = new createProductModel();
+      this.mainForm = this.getFormControls();
       this.productService = productService;
       this.typeCurrencyService = typeCurrencyService;
       this.typePaymentService = typePaymentService;
       this.router = router;
-      this.route = route;
-      this.mainForm = this.getFormControls();
     }
 
 
@@ -75,29 +80,28 @@ export class CreateProductComponent implements OnInit{
 
     // Create the product and return to the list products
     public create(): void {
+
+      // Check if the form is valid
+      if (this.mainForm.invalid) return;
+      
       this.productService.add(
-        objectHelper.mapMatchingProperties(new createProductRequest(), this.model)
+        objectHelper.mapMatchingProperties(new createProductRequest(), this.mainForm.value)
       )
-      .subscribe(() => this.router.navigate(['/list-products']));
+      .subscribe(() => this.router.navigate([this.router.routes.LIST_PRODUCTS]));
     }
 
 
     // get the forom controls and validations
     private getFormControls(): FormGroup {
-
-      // Validators
-      const validatorNoLetters: ValidatorFn = Validators.pattern('^\d+$');
-      const validatorNoCero: ValidatorFn = Validators.max(0);
-      
-      return new FormGroup({
-        name: new FormControl(this.model.name, [Validators.required]),
-        detail: new FormControl(this.model.detail, [Validators.required]),
-        typeCurrencyId: new FormControl(this.model.typeCurrencyId, [validatorNoCero]),
-        typePaymentId: new FormControl(this.model.typePaymentId, [validatorNoCero]),
-        implementationCost: new FormControl(this.model.implementationCost, [Validators.required, validatorNoLetters]),
-        instalationCost: new FormControl(this.model.instalationCost, [Validators.required, validatorNoLetters]),
-        regularPrice: new FormControl(this.model.regularPrice, [Validators.required, validatorNoLetters]),
-        advancePrice: new FormControl(this.model.advancePrice, [Validators.required, validatorNoLetters])
+      return this.formBuilder.group({
+        name: ['', [Validators.required]],
+        detail: ['', [Validators.required]],
+        typeCurrencyId: ['', formFieldsValidatorHelper.forbiddenValue('0')],
+        typePaymentId: ['', formFieldsValidatorHelper.forbiddenValue('0')],
+        implementationCost: [0, [Validators.required]],
+        instalationCost: [0, [Validators.required]],
+        regularPrice: [0, [Validators.required]],
+        advancePrice: [0, [Validators.required]]
       });
     }
 
@@ -111,9 +115,4 @@ export class CreateProductComponent implements OnInit{
     get instalationCost() { return this.mainForm.get('instalationCost')!; }
     get regularPrice() { return this.mainForm.get('regularPrice')!; }
     get advancePrice() { return this.mainForm.get('advancePrice')!; }
-
-
-    public test(): void {
-      console.log(this.model.typeCurrencyId);
-    }
 }

@@ -6,7 +6,7 @@ import { genericService } from "./common/genericService";
 import { IProductService } from "../interfaces/services/IProductService";
 import { productRepository } from "../repositories/productRepository";
 import { map, Observable } from "rxjs";
-import { objectHelper } from "../helpers/objectHelper";
+import { objectHelper } from "../helpers/others/objectHelper";
 import { createProductRequest } from "../DTOS/request/product/createProductRequest";
 import { editProductRequest } from "../DTOS/request/product/editProductRequest";
 import { simulateDeleteProductRequest } from "../DTOS/request/product/simulateDeleteProductRequest";

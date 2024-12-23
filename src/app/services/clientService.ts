@@ -8,7 +8,7 @@ import { IClientService } from "../interfaces/services/IClientService";
 import { clientRepository } from "../repositories/clientRepository";
 import { genericService } from "./common/genericService";
 import { editClientModel } from "../DTOS/models/clients/editClientModel";
-import { objectHelper } from "../helpers/objectHelper";
+import { objectHelper } from "../helpers/others/objectHelper";
 import { clientModel } from "../DTOS/models/clients/clientModel";
 import { Injectable } from "@angular/core";
 

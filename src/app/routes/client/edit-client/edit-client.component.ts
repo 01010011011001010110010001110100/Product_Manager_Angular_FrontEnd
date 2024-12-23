@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { editClientModel } from '../../../DTOS/models/clients/editClientModel';
 import { clientService } from '../../../services/clientService';
-import { objectHelper } from '../../../helpers/objectHelper';
+import { objectHelper } from '../../../helpers/others/objectHelper';
 import { editClientRequest } from '../../../DTOS/request/client/editClientRequest';
 
 @Component({

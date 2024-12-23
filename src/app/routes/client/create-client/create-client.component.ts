@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { createClientModel } from '../../../DTOS/models/clients/createClientModel';
 import { clientService } from '../../../services/clientService';
 import { Router, RouterLink } from '@angular/router';
-import { objectHelper } from '../../../helpers/objectHelper';
+import { objectHelper } from '../../../helpers/others/objectHelper';
 import { createClientRequest } from '../../../DTOS/request/client/createClientRequest';
 import { FormsModule } from '@angular/forms';
 
