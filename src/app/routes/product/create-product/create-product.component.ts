@@ -60,6 +60,11 @@ export class CreateProductComponent implements OnInit{
       this.typeCurrencyService = typeCurrencyService;
       this.typePaymentService = typePaymentService;
       this.router = router;
+
+
+      this.typeCurrencyId.events.subscribe((event) => {
+        console.log(event);
+      });
     }
 
 
@@ -96,8 +101,8 @@ export class CreateProductComponent implements OnInit{
       return this.formBuilder.group({
         name: ['', [Validators.required]],
         detail: ['', [Validators.required]],
-        typeCurrencyId: ['', formFieldsValidatorHelper.forbiddenValue('0')],
-        typePaymentId: ['', formFieldsValidatorHelper.forbiddenValue('0')],
+        typeCurrencyId: ['', formFieldsValidatorHelper.forbiddenValues(['0', ''])],
+        typePaymentId: ['', formFieldsValidatorHelper.forbiddenValues(['0', ''])],
         implementationCost: [0, [Validators.required]],
         instalationCost: [0, [Validators.required]],
         regularPrice: [0, [Validators.required]],

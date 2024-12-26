@@ -3,7 +3,7 @@ import { editProductModel } from '../../../DTOS/models/product/editProductModel'
 import { productService } from '../../../services/productService';
 import { typeCurrencyService } from '../../../services/typeCurrencyService';
 import { typePaymentService } from '../../../services/typePaymentService';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { forkJoin, map, Observable } from 'rxjs';
 import { typeCurrencyEntity } from '../../../entities/typeCurrencyEntity';
 import { typePaymentEntity } from '../../../entities/typePaymentEntity';
@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { FieldValidationMarkComponent } from '../../../components/field-validation-mark/field-validation-mark.component';
 import { FieldValidationMessageComponent } from '../../../components/field-validation-message/field-validation-message.component';
 import { formFieldsValidatorHelper } from '../../../helpers/others/formFieldsValidatorsHelper';
+import { routerDecorated } from '../../../helpers/extensionClasses/routerDecorated';
 
 @Component({
   selector: 'app-edit-product',
@@ -36,7 +37,7 @@ export class EditProductComponent implements OnInit{
   private typePaymentService: typePaymentService;
 
   // Router Modules
-  private router: Router;
+  public router: routerDecorated;
   private route: ActivatedRoute;
 
   // Controls form
@@ -48,7 +49,7 @@ export class EditProductComponent implements OnInit{
     productService: productService,
     typeCurrencyService: typeCurrencyService,
     typePaymentService: typePaymentService,
-    router: Router,
+    router: routerDecorated,
     route: ActivatedRoute
   ) {
     // Injections
@@ -119,7 +120,7 @@ export class EditProductComponent implements OnInit{
       objectHelper.mapMatchingProperties(new editProductRequest(), this.model), 
       this.model.documentId
     )
-    .subscribe(() => this.router.navigate(['list-products']));
+    .subscribe(() => this.router.navigate([this.router.routes.LIST_PRODUCTS]));
   }
 
 
@@ -128,8 +129,8 @@ export class EditProductComponent implements OnInit{
     return this.formBuilder.group({
       name: ['', [Validators.required]],
       detail: ['', [Validators.required]],
-      typeCurrencyId: ['', formFieldsValidatorHelper.forbiddenValue('0')],
-      typePaymentId: ['', formFieldsValidatorHelper.forbiddenValue('0')],
+      typeCurrencyId: ['', formFieldsValidatorHelper.forbiddenValues(['0', ''])],
+      typePaymentId: ['', formFieldsValidatorHelper.forbiddenValues(['0', ''])],
       implementationCost: [0, [Validators.required]],
       instalationCost: [0, [Validators.required]],
       regularPrice: [0, [Validators.required]],

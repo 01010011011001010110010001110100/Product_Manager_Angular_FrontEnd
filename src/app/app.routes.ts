@@ -19,12 +19,14 @@ export const routes: Routes = [
 
     // Product routes
     { path: EROUTES.LIST_PRODUCTS, component: ListProductsComponent },
+    // { path: EROUTES.DETAIL_PRODUCT, component: DetailProductComponent },
     { path: EROUTES.CREATE_PRODUCT, component: CreateProductComponent},
     { path: EROUTES.EDIT_PRODUCT, component: EditProductComponent},
     { path: EROUTES.DELETE_PRODUCT, component: DeleteProductComponent },
 
     // Client routes
     { path: EROUTES.LIST_CLIENTS, component: ListClientsComponent },
+    // { path: EROUTES.DETAIL_CLIENT, component: DetailClientComponent },
     { path: EROUTES.CREATE_CLIENT, component: CreateClientComponent },
     { path: EROUTES.EDIT_CLIENT, component: EditClientComponent },
     { path: EROUTES.DELETE_CLIENT, component: DeleteClientComponent }
