@@ -7,8 +7,8 @@
                 <span class="fs-5 text-danger d-flex">[ <p id="nameEntity"></p> ]</span>
             </div>
             <div class="modal-footer border-0">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal();" aria-label="Close">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="emitDeleteEvent();">Delete</button>
             </div>
         </div>
     </div>

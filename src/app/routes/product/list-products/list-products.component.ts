@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { routerDecorated } from '../../../helpers/extensionClasses/routerDecorated';
 import { DeleteModalComponent } from '../../../components/delete-modal/delete-modal.component';
 import { JsonPipe } from '@angular/common';
+import { simulateDeleteProductRequest } from '../../../DTOS/request/product/simulateDeleteProductRequest';
 
 @Component({
   selector: 'list-products',
@@ -25,16 +26,16 @@ export class ListProductsComponent implements OnInit {
   public router: routerDecorated;
 
   // Services
-  private service: productService
+  private productService: productService
 
 
   constructor(
-    service: productService,
+    productService: productService,
     router: routerDecorated
   ) {
     // Initialize variables
     this.products = [];
-    this.service = service;
+    this.productService = productService;
     this.router = router;
   }
 
@@ -45,9 +46,15 @@ export class ListProductsComponent implements OnInit {
 
   // load Products
   private loadProducts() {
-    this.service.getAllModelFiltered([{property: "isDeleted", value: false}]).subscribe((products) => {
+    this.productService.getAllModelFiltered([{property: "isDeleted", value: false}]).subscribe((products) => {
       this.products = products;
     });
   }
    
+  // Delete Product
+  public deleteProduct(documentId: string) {
+    this.productService.simulateDelete(new simulateDeleteProductRequest(), documentId).subscribe(() => {
+      // this.router.navigate([this.router.routes.LIST_PRODUCTS]);
+    });
+  }
 }

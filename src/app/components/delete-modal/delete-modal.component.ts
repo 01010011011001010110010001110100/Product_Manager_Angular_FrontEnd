@@ -1,4 +1,9 @@
-import { AfterViewInit, Component, ElementRef, viewChild, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { deleteEntityModal } from '../../DTOS/models/generals/deleteEntityModel';
+import * as bootstrap from 'bootstrap';
+
+
+
 
 @Component({
   selector: 'delete-modal',
@@ -6,27 +11,80 @@ import { AfterViewInit, Component, ElementRef, viewChild, ViewChild } from '@ang
   templateUrl: './delete-modal.component.html',
   styleUrl: './delete-modal.component.css'
 })
-export class DeleteModalComponent implements AfterViewInit{
+export class DeleteModalComponent implements OnInit{
 
-  ngAfterViewInit(): void {
+  // Vars
+  private entityToDeleteModel: deleteEntityModal | null;
 
-    // Elements
-    const deleteModal: HTMLElement | null = document.getElementById('deleteModal');
-    const nameEntity: HTMLElement | null = document.getElementById('nameEntity');
-    var buttonTriggeredModal: HTMLElement | null = null;
+  // Elements
+  private modalElement: HTMLElement | null;
+  private nameEntityElement: HTMLElement | null;
+  private modalBoostrap: bootstrap.Modal | null;
 
-    // Loadn name
-    deleteModal?.addEventListener('show.bs.modal', (event: any) => {
+  // Events
+  @Output() confirmEvent: EventEmitter<string> = new EventEmitter<string>();
 
-      // Set the button that triggered the modal
-      buttonTriggeredModal = event.relatedTarget;
 
-      // Get the parameters from the button
-      const parameters = JSON.parse(buttonTriggeredModal?.getAttribute('data-bs-parameters') ?? '');
-      
-      // Set the
-      if (nameEntity) nameEntity.textContent = parameters.name;
-    });
+  constructor() { 
+    // Initialize
+    this.entityToDeleteModel = null;
+    this.nameEntityElement = null;
+    this.modalElement = null;
+    this.modalBoostrap = null;
   }
 
+  ngOnInit(): void {
+    this.loadElements();
+  }
+
+  private loadElements(): void {
+    // Elements
+    this.modalElement = document.getElementById('deleteModal');
+    this.nameEntityElement = document.getElementById('nameEntity');
+    this.modalBoostrap = new bootstrap.Modal(this.modalElement!);
+  }
+
+  public openModel(params: any): void {
+    
+    // Set name
+    if (this.nameEntityElement) this.nameEntityElement.textContent = params.name;
+
+    this.modalBoostrap?.show();
+  }
+
+  public closeModel(): void {
+    this.modalBoostrap?.hide();
+  }
+
+  public confirm(): void {
+    if (this.entityToDeleteModel === null) return;
+    this.confirmEvent.emit(this.entityToDeleteModel.documentId);
+  }
+
+  // ngOnInit(): void {
+  //   this.loadDataInModal();
+  // }
+
+  // private loadDataInModal(): void {
+  //   // Elements
+  //   this.modal = document.getElementById('deleteModal');
+
+
+  //   //Load Model Data
+  //   this.modal?.addEventListener('show.bs.modal', (event: any) => {
+
+  //     // Elements
+  //     const nameEntity: Element | null = document.getElementById('nameEntity');
+  //     var buttonTriggeredModal: Element | null = event.relatedTarget;
+
+  //     // Get parameters
+  //     const parameters = JSON.parse(buttonTriggeredModal?.getAttribute('data-bs-parameters') ?? '');
+      
+  //     // Fill modal
+  //     if (nameEntity) nameEntity.textContent = parameters.name;
+
+  //     // Fill model
+  //     this.entityToDeleteModel = objectHelper.mapMatchingProperties(new deleteEntityModal(), parameters);
+  //   });
+  // }
 }
