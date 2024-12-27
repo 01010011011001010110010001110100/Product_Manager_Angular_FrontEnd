@@ -47,7 +47,7 @@ export class DeleteModalComponent implements OnInit{
   public openModel(params: any): void {
     
     // Set name
-    if (this.nameEntityElement) this.nameEntityElement.textContent = params.name;
+    if (this.nameEntityElement) this.nameEntityElement.textContent = (params as deleteEntityModal).name;
 
     this.modalBoostrap?.show();
   }
