@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "./components/header/header.component";
-import { FooterComponent } from "./components/footer/footer.component";
+import { HeaderComponent } from "./Presentation/components/layaout/header/header.component";
+import { FooterComponent } from "./Presentation/components/layaout/footer/footer.component";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,4 @@ import { FooterComponent } from "./components/footer/footer.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'forTheProject';
-}
+export class AppComponent { }

@@ -2,7 +2,7 @@ import { ApplicationConfig, inject, provideAppInitializer, provideZoneChangeDete
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch, withJsonpSupport } from '@angular/common/http';
-import { configService } from './services/configService';
+import { configService } from './Core/services/configService';
 
 export const appConfig: ApplicationConfig = {
   providers: [
