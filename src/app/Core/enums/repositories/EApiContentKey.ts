@@ -1,3 +1,3 @@
 export enum EApiContentKey {
-    STRAPI = "data"
+    STRAPI = 'data'
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "./Presentation/components/layaout/header/header.component";
-import { FooterComponent } from "./Presentation/components/layaout/footer/footer.component";
+import { HeaderComponent } from "./Presentation/widgets/layaout/header/header.component";
+import { FooterComponent } from "./Presentation/widgets/layaout/footer/footer.component";
 
 @Component({
   selector: 'app-root',

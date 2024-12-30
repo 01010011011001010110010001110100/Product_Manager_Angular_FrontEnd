@@ -4,10 +4,8 @@ import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'field-validation-mark',
-  imports: [
-    NgClass
-  ],
-  templateUrl: './field-validation-mark.component.html',
+  imports: [NgClass],
+  template: `<span [ngClass]="currentClases">{{ isValid ? '*' : '(*)' }}</span>`,
   styleUrl: './field-validation-mark.component.css'
 })
 export class FieldValidationMarkComponent implements OnInit{

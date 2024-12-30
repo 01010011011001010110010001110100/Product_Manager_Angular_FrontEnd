@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { ListProductsComponent } from './Presentation/routes/product/list-products/list-products.component';
-import { AboutPageComponent } from './Presentation/routes/about-page/about-page.component';
-import { ListClientsComponent } from './Presentation/routes/client/list-clients/list-clients.component';
-import { CreateProductComponent } from './Presentation/routes/product/create-product/create-product.component';
-import { EditProductComponent } from './Presentation/routes/product/edit-product/edit-product.component';
-import { CreateClientComponent } from './Presentation/routes/client/create-client/create-client.component';
-import { EditClientComponent } from './Presentation/routes/client/edit-client/edit-client.component';
+import { ListProductsComponent } from './Presentation/views/product/list-products/list-products.component';
+import { AboutPageComponent } from './Presentation/views/general/about-page/about-page.component';
+import { ListClientsComponent } from './Presentation/views/client/list-clients/list-clients.component';
+import { CreateProductComponent } from './Presentation/views/product/create-product/create-product.component';
+import { EditProductComponent } from './Presentation/views/product/edit-product/edit-product.component';
+import { CreateClientComponent } from './Presentation/views/client/create-client/create-client.component';
+import { EditClientComponent } from './Presentation/views/client/edit-client/edit-client.component';
 import { ERoutes } from './Core/enums/ERoutes';
 
 export const routes: Routes = [

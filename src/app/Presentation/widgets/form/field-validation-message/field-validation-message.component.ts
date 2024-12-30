@@ -4,7 +4,11 @@ import { AbstractControl } from '@angular/forms';
 @Component({
   selector: 'field-validation-message',
   imports: [],
-  templateUrl: './field-validation-message.component.html',
+  template: `
+    @if (!isValid) {
+      <p class="text-danger">{{getMessage()}}</p>
+    }
+  `,
   styleUrl: './field-validation-message.component.css'
 })
 export class FieldValidationMessageComponent implements OnInit {

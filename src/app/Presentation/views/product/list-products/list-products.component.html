@@ -34,7 +34,7 @@
                                     <tr>
                                       <td>{{$index + 1}}</td>
                                       <td>{{product.name}}</td>
-                                      <td class="">{{product.detail}}</td>
+                                      <td>{{product.detail}}</td>
                                       <td>
                                         <a 
                                           [routerLink]="[router.routes.SEPARATOR + router.routes.EDIT_PRODUCT]" 
@@ -60,6 +60,14 @@
                                 }
                               </tbody>
                             </table>
+
+
+                            <dinamic-table 
+                              [headers]="['N#','Name','Detail', 'Controls']"
+                              [dataSource]="products"
+                              [config]="{emptyValue: 'XD'}"
+                            />
+
                           </div>
                         </div>
                       </div>
