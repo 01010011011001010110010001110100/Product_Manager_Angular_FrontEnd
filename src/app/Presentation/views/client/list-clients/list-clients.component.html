@@ -1,61 +1,58 @@
-<div class="">
+<div class="container">
   <div class="row mb-4">
       <div class="d-flex flex-row justify-content-between p-0 gap-2">
           <div class="main-tittle">
               <h1 class="text-white">Clients</h1>
           </div>
-          <a [routerLink]="['/create-client']" class="btn btn-success d-flex align-items-center">+Add</a>
+          <a [routerLink]="[router.routes.SEPARATOR + router.routes.CREATE_CLIENT]" class="btn btn-success d-flex align-items-center">+Add</a>
       </div>
   </div>
-  @if (clients.length == 0) {
-      <h1>There are no registered clients yet</h1>
-  } 
-  @else {
-      <section class="intro">
-          <div class="h-100">
-            <div class="mask d-flex align-items-center h-100">
-              <div class="container">
-                <div class="row justify-content-center">
-                  <div class="col">
-                    <div class="card" style="background-color: #f5f7fa;">
-                      <div class="card-body">
-                        <div class="table-responsive">
-                          <table class="table table-borderless mb-0">
-                            <thead>
-                              <tr>
-                                <th scope="col">N#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Controls</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @for (client of clients; track $index) {
-                                  <tr>
-                                    <td>{{$index + 1}}</td>
-                                    <td>{{client.name}}</td>
-                                    <td>
-                                      <a [routerLink]="['/edit-client']" [queryParams]="{ documentId: client.documentId }" class="btn btn-warning m-1">
-                                          <i class="bi bi-pencil-fill"></i>
-                                      </a>
-                                      <a href="detail-client" class="btn btn-success">
-                                          <i class="bi bi-eye-fill"></i>
-                                      </a>
-                                      <a [routerLink]="['/delete-client']" [queryParams]="{ documentId: client.documentId, Name: client.name }" class="btn btn-danger m-1">
-                                          <i class="bi bi-trash3-fill"></i>
-                                      </a>
-                                    </td>
-                                  </tr>
-                              }
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
+  <section class="intro">
+    <div class="h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col">
+              <div class="card" style="background-color: #f5f7fa;">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <dynamic-table
+                      [config]="{
+                        readingMode: enumProviderService.dynamicTableReadingMode.SPECIFIC,
+                        dataSourceEmptyMessage: 'There is not Clients yet.'
+                      }"
+                      [headers]="['N#','Name','Controls']"
+                      [dataSource]="clients"
+                      [specificTypes]="[
+                        {
+                          type: enumProviderService.dynamicTableDataType.INDEX, 
+                          content: 1
+                        },
+                        {
+                          type: enumProviderService.dynamicTableDataType.KEY,
+                          content: 'name'
+                        },
+                        {
+                          type: enumProviderService.dynamicTableDataType.CONTROLS,
+                          content: [
+                            enumProviderService.dynamicTableControlsType.EDIT,
+                            enumProviderService.dynamicTableControlsType.DETAIL,
+                            enumProviderService.dynamicTableControlsType.DELETE
+                          ]
+                        }
+                      ]"
+                      (editRow)="router.navigate([router.routes.SEPARATOR,router.routes.EDIT_CLIENT,{documentId: $event.documentId}])"
+                      (detailRow)="router.navigate([router.routes.SEPARATOR,router.routes.DETAIL_CLIENT,{documentId: $event.documentId}])"
+                      (deleteRow)="openDeleteModal($event);"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-  }
+        </div>
+      </div>
+    </div>
+  </section>
+  <delete-modal (confirmEvent)="deleteClient($event);"/>
 </div>

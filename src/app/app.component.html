@@ -1,9 +1,10 @@
-
-<!-- Layout -->
-<div class="container d-flex h-100 p-3 mx-auto flex-column">
-  <headerComp />
-  <div class="vh-100">
-    <router-outlet />
+<div class="d-flex vh-100 overflow-hidden text-dark-emphasis bg-light">
+  <side-bar />
+  <div class="d-flex flex-column w-100 bg-light">
+    <headerComp />
+    <div class="px-5"><hr class="m-0 text-body-tertiary"></div>
+    <main role="main" class="flex-grow-1 overflow-y-auto pt-5 px-5">
+      <router-outlet />
+    </main>
   </div>
-  <footerComp />
 </div>

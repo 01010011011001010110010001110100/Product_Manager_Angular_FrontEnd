@@ -95,7 +95,7 @@ export class EditProductFormComponent implements OnInit {
   }
 
   private loadParameters(): Observable<any> {
-    return this.route.queryParams.pipe(map((params: any) => params));
+    return this.route.params.pipe(map((params: any) => params));
   }
 
   // Fill the list of the model with the currencies and payments
@@ -152,7 +152,7 @@ export class EditProductFormComponent implements OnInit {
       instalationCost: [0, [Validators.required]],
       regularPrice: [0, [Validators.required]],
       advancePrice: [0, [Validators.required]],
-      isActive: false,
+      isActive: false
     });
   }
 

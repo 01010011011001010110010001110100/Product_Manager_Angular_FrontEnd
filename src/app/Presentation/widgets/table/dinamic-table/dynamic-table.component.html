@@ -1,0 +1,113 @@
+<table class="table table-borderless mb-0">
+  <thead>
+    <tr>
+      @for (header of headers; track $index) 
+      {
+        <th scope="col">{{ header }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of dataSource; track $index; let indexData = $index) 
+    {
+      <tr>
+        @switch (config.readingMode) 
+        {
+          @case (readingMode.ANY) 
+          {
+            @if (isArray(data)) 
+            {
+              @for (content of data; track $index) 
+              {
+                <td>{{ content }}</td>
+              }
+            }
+            @else 
+            {
+              <p class="text-danger fw-bold m-0">[Invalid Data Source]</p>
+            }
+          }
+          @case (readingMode.SPECIFIC) 
+          {
+            @for (content of specificTypes; track $index; let indexContent = $index) 
+            {
+              <td>
+                @switch (content.type) 
+                {
+                  @case (dataType.KEY) 
+                  {
+                    @if (isContentKeyOfData(data, content.content)) 
+                    {
+                      {{ data[content.content] }}
+                    }
+                    @else 
+                    {
+                      {{ config.emptyValueMessage }}
+                    }
+                  }
+                  @case (dataType.TEXT) 
+                  {
+                    {{ content.content }}
+                  }
+                  @case (dataType.COMPONENT) 
+                  {
+                    <render-container [componentToRender]="content.content"/> 
+                  }
+                  @case (dataType.INDEX) 
+                  {
+                    {{ indexData + parseContentToNumber(content.content) }}
+                  }
+                  @case (dataType.CONTROLS) 
+                  {
+                    @if (isArray(content.content)) 
+                    {
+                      @for (typeControl of content.content; track $index) 
+                      {
+                        @if (isControlMember(typeControl)) 
+                        {
+                          @switch (typeControl) 
+                          {
+                            @case (controlType.EDIT) 
+                            {
+                              <a (click)="emitEditRow(data);" class="btn btn-warning m-1">
+                                <i class="bi bi-pencil-fill"></i>
+                              </a>
+                            }
+                            @case (controlType.DETAIL) 
+                            {
+                              <a (click)="emitDetailRow(data);"  class="btn btn-success m-1">
+                                <i class="bi bi-eye-fill"></i>
+                              </a>
+                            }
+                            @case (controlType.DELETE)
+                            {
+                              <a (click)="emitDeleteRow(data);"  class="btn btn-danger m-1">
+                                <i class="bi bi-trash3-fill"></i>
+                              </a>
+                            }
+                          }
+                        }
+                        @else 
+                        {
+                          <p class="text-danger fw-bold">{{ typeControl }} : [NOT A CONTROL]</p>
+                        }
+                      }
+                    }
+                    @else 
+                    {
+                      <p class="text-danger fw-bold">[INVALID CONTROLS]</p>
+                    }
+                  }
+                }
+              </td>
+            }
+          }
+        }
+      </tr>
+    }
+    @empty 
+    {
+      <h1 class="text-secondary fw-bold mt-2">{{ config.dataSourceEmptyMessage }}</h1>
+    }
+  </tbody>
+</table>

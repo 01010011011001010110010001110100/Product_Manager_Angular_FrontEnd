@@ -1,7 +1,7 @@
-import { EDynamicTableRowToUse } from "../../../enums/components/EDynamicTableRowToUse";
+import { EDynamicTableReadingMode } from "../../../enums/components/dynamicTable/EDynamicTableReadingMode";
 
 export interface dynamicTableConfig {
-    emptyValue?: string;
-    rowsToUse?: EDynamicTableRowToUse;
-    useControls?: boolean;
+    emptyValueMessage?: string;
+    dataSourceEmptyMessage?: string;
+    readingMode?: EDynamicTableReadingMode;
 }

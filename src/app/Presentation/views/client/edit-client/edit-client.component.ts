@@ -1,70 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { editClientModel } from '../../../../Core/DTOS/models/clients/editClientModel';
-import { clientService } from '../../../../Core/services/clientService';
-import { objectHelper } from '../../../../Core/helpers/others/objectHelper';
-import { editClientRequest } from '../../../../Core/DTOS/request/client/editClientRequest';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { routerDecorated } from '../../../../Core/helpers/extensionClasses/routerDecorated';
+import { EditClientFormComponent } from '../../../components/client/form/edit-client-form/edit-client-form.component';
 
 @Component({
   selector: 'app-edit-client',
   imports: [
-    FormsModule,
+    EditClientFormComponent,
     RouterLink
-  ],
+],
   templateUrl: './edit-client.component.html',
   styleUrl: './edit-client.component.css'
 })
-export class EditClientComponent implements OnInit{
-    // Vars
-    public model: editClientModel;
-
-    // Services
-    private clientService: clientService;
-
+export class EditClientComponent {
     // Routers vars
-    private router: Router;
-    private route: ActivatedRoute;
+    public router: routerDecorated;
 
-    constructor(
-      clientService: clientService,
-      router: Router,
-      route: ActivatedRoute
-    ) 
+    constructor(router: routerDecorated) 
     {
       // Initialize vars
-      this.model = new editClientModel();
-      this.clientService = clientService;
       this.router = router;
-      this.route = route;
-    }
-
-
-    ngOnInit(): void {
-      this.getClientToEdit();
-    }
-
-
-    // Get the client to edit
-    private getClientToEdit(): void{
-      this.route.queryParams.subscribe((params: any) => {
-        const clientId = params['documentId'];
-
-        this.clientService.getEditModel(clientId).subscribe((editModel: editClientModel | undefined) => {
-          if (editModel) {
-            this.model = editModel;
-          }
-        });
-      });
-    }
-
-
-    // Edit the product
-    public update(): void {
-      this.clientService.update(
-        objectHelper.mapMatchingProperties(new editClientRequest(), this.model), 
-        this.model.documentId
-      )
-      .subscribe(() => this.router.navigate(['/list-clients']));
     }
 }
